@@ -1,17 +1,16 @@
 import React from 'react';
+import Container from '@material-ui/core/Container';
+
+
+import LoginForm from './components/LoginForm';
+
+import classes from './classes.module.css';
 
 const Login = () => {
   return (
-    <div>
-      <h1>Login</h1>
-      <div>
-        <label>Username</label>
-        <input type="text" />
-        <label>Password</label>
-        <input type="password" />
-        <button type="button">Login</button>
-      </div>
-    </div>
+    <Container maxWidth="xs" className={classes.Login}>
+      <LoginForm className={classes.Login_LoginForm}/>
+    </Container>
   );
 };
 
