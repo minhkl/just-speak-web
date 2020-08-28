@@ -12,7 +12,7 @@ const Login = () => {
         <button type="button">Login</button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
