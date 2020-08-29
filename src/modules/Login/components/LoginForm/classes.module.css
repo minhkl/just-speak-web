@@ -4,3 +4,7 @@
 .LoginForm_SubmitButton {
   margin-top: 10px;
 }
+.LoginForm_ErrorAlert {
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
