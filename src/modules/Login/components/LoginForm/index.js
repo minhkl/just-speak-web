@@ -1,4 +1,5 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import cs from 'classnames';
 import Button from '@material-ui/core/Button';
@@ -9,35 +10,25 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import {useForm, Controller} from 'react-hook-form';
-import request from 'src/utils/request';
+import {loginAction} from '../../actions';
 import classes from './classes.module.css';
 
 const defaultValues = {
-  username: 'admin',
-  password: 'admin123',
+  username: 'minhkl1',
+  password: 'minhkl123',
 };
 
-const LoginForm = ({className}) => {
-  const [loginError, setLoginError] = useState();
+const LoginForm = ({className, requestLogin, isLoggingIn, loginError}) => {
   const {handleSubmit, errors, control} = useForm({defaultValues});
-  const onSubmit = useCallback(async (data) => {
-    setLoginError(null);
-    const [error, response] = await request('http://localhost:5555/auth', {
-      method: 'POST',
-      data,
-    });
-    if (error) {
-      setLoginError(error?.data?.error?.message);
-      return;
-    }
-    alert('Login Successfully');
-    console.log('response', response);
-  }, []);
+  const onSubmit = useCallback((data) => {
+    requestLogin(data).then(() => console.log('success')).catch((e) => console.log('fail', e));
+  }, [requestLogin]);
+  const errorMessage = loginError ? loginError.error.message : null;
   return (
     <Paper elevation={3} className={cs(classes.LoginForm, className)}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography variant="h4" component="h1">Just Speak</Typography>
-        {loginError && <Alert severity="error" className={classes.LoginForm_ErrorAlert}>{loginError}</Alert>}
+        {errorMessage && <Alert severity="error" className={classes.LoginForm_ErrorAlert}>{errorMessage}</Alert>}
         <Controller
           control={control}
           name="username"
@@ -73,14 +64,29 @@ const LoginForm = ({className}) => {
           size="large"
           className={classes.LoginForm_SubmitButton}
           type="submit"
-          fullWidth>Login</Button>
+          disabled={isLoggingIn}
+          fullWidth>{isLoggingIn ? 'Login...' : 'Login'}</Button>
       </form>
     </Paper>
   );
 };
 
+const mapStateToProps = (state) => ({
+  isLoggingIn: state?.auth?.isRequesting,
+  loginError: state?.auth?.error,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  requestLogin: async (data) => {
+    return await dispatch(loginAction(data));
+  },
+});
+
 LoginForm.propTypes = {
   className: PropTypes.string,
+  requestLogin: PropTypes.func,
+  isLoggingIn: PropTypes.bool,
+  loginError: PropTypes.object,
 };
 
-export default LoginForm;
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

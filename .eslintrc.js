@@ -17,9 +17,14 @@ module.exports = {
   'plugins': [
     'react',
   ],
+  'settings': {
+    'react': {
+      'version': 'detect',
+    },
+  },
   'rules': {
     'require-jsdoc': 'off',
-    'max-len': ['error', {'code': 120}],
+    'max-len': ['warn', {'code': 120}],
     'no-unused-vars': 'warn',
     'indent': ['warn', 2],
     'space-before-blocks': 'warn',
@@ -28,5 +33,7 @@ module.exports = {
     'eol-last': 'error',
     'no-extra-semi': 'warn',
     'no-whitespace-before-property': 'error',
+    'react/prop-types': 'warn',
+    'padded-blocks': 'warn',
   },
 };
