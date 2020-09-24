@@ -14,14 +14,15 @@ import {loginAction} from '../../actions';
 import classes from './classes.module.css';
 
 const defaultValues = {
-  username: 'minhkl1',
-  password: 'minhkl123',
+  username: '',
+  password: '',
 };
 
-const LoginForm = ({className, requestLogin, isLoggingIn, loginError}) => {
+export const LoginFormBase = ({className, requestLogin, isLoggingIn, loginError}) => {
   const {handleSubmit, errors, control} = useForm({defaultValues});
   const onSubmit = useCallback((data) => {
-    requestLogin(data).then(() => console.log('success')).catch((e) => console.log('fail', e));
+    console.log('asdasdsd');
+    requestLogin(data);
   }, [requestLogin]);
   const errorMessage = loginError ? loginError.error.message : null;
   return (
@@ -34,6 +35,7 @@ const LoginForm = ({className, requestLogin, isLoggingIn, loginError}) => {
           name="username"
           rules={{required: {value: true, message: 'Please enter username'}}}
           as={<TextField
+            id="username"
             error={!!errors?.username}
             helperText={errors?.username?.message}
             label="Username"
@@ -46,6 +48,7 @@ const LoginForm = ({className, requestLogin, isLoggingIn, loginError}) => {
           name="password"
           rules={{required: {value: true, message: 'Please enter password'}}}
           as={<TextField
+            id="password"
             label="Password"
             error={!!errors?.password}
             helperText={errors?.password?.message}
@@ -82,11 +85,13 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-LoginForm.propTypes = {
+LoginFormBase.propTypes = {
   className: PropTypes.string,
   requestLogin: PropTypes.func,
   isLoggingIn: PropTypes.bool,
   loginError: PropTypes.object,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+const LoginForm = connect(mapStateToProps, mapDispatchToProps)(LoginFormBase);
+
+export default LoginForm;

@@ -1,6 +1,5 @@
 import {loginAction, loginRequestAction, loginSuccessAction, loginFailAction} from './index';
 import thunk from 'redux-thunk';
-// import expect from 'expect';
 import moxios from 'moxios';
 import configureMockStore from 'redux-mock-store';
 
@@ -22,7 +21,7 @@ describe('Login actions', () => {
     const mockLoginResponse = {
       status: 'success',
       data: {
-        token: 'the_token_abcxxx',
+        token: 'the_token_abcxxx1',
       },
     };
     moxios.wait(() => {
