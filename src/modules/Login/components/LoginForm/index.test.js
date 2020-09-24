@@ -1,6 +1,6 @@
 import React from 'react';
 import {LoginFormBase} from './index';
-import {render, fireEvent, screen, act, waitFor} from '@testing-library/react';
+import {render, fireEvent, screen, act} from '@testing-library/react';
 
 describe('Test LoginForm', () => {
   fit('should call requestLogin func when click Login button', async (done) => {
