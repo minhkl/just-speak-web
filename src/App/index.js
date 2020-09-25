@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
 import {Router} from '@reach/router';
 import Login from 'src/modules/Login';
 import AdminHome from 'src/modules/AdminHome';
@@ -8,8 +9,18 @@ import UserHome from 'src/modules/UserHome';
 import AdminPatterns from 'src/modules/AdminPatterns';
 import PrivateRoute from 'src/components/PrivateRoute';
 import classes from './classes.module.css';
+import withAuth from 'src/modules/Login/hocs/withAuth';
 
-function App() {
+const AppBase = ({validateToken, didValidateToken}) => {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    validateToken(token);
+  }, []);
+
+  if (!didValidateToken) {
+    return 'Validating';
+  }
+
   return (
     <div className={classes.App}>
       <Router>
@@ -24,6 +35,12 @@ function App() {
       </Router>
     </div>
   );
-}
+};
 
+AppBase.propTypes = {
+  validateToken: PropTypes.func,
+  didValidateToken: PropTypes.bool,
+};
+
+const App = withAuth(AppBase);
 export default App;

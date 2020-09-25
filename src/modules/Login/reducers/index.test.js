@@ -1,4 +1,4 @@
-import reducer, {initialState} from './index';
+import reducer, {initialState} from './login';
 import * as LoginActions from '../actions';
 
 describe('Login Reducer', () => {

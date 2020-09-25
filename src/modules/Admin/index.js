@@ -1,13 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from '@reach/router';
+import AdminHeader from 'src/components/AdminHeader';
 
 const Admin = ({children}) => (
   <div>
-    <nav>
-      <Link to="/admin">Home</Link>
-      <Link to="/admin/patterns">Patterns</Link>
-    </nav>
+    <AdminHeader />
     {children}
   </div>
 );

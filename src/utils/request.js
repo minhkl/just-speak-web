@@ -29,8 +29,8 @@ export default async function request(url, options) {
   };
   try {
     const response = await axios(optionsWithDefaultTimeout);
-    return [null, response];
+    return [null, response.data, response];
   } catch (error) {
-    return [error.response];
+    return [error.response.data, null, error.response];
   }
 }

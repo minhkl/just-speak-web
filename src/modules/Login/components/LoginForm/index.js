@@ -24,7 +24,7 @@ export const LoginFormBase = ({className, requestLogin, isLoggingIn, loginError}
     console.log('asdasdsd');
     requestLogin(data);
   }, [requestLogin]);
-  const errorMessage = loginError ? loginError.error.message : null;
+  const errorMessage = loginError ? loginError.message : null;
   return (
     <Paper elevation={3} className={cs(classes.LoginForm, className)}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -75,8 +75,8 @@ export const LoginFormBase = ({className, requestLogin, isLoggingIn, loginError}
 };
 
 const mapStateToProps = (state) => ({
-  isLoggingIn: state?.auth?.isRequesting,
-  loginError: state?.auth?.error,
+  isLoggingIn: state?.auth?.login?.isRequesting,
+  loginError: state?.auth?.login?.error,
 });
 
 const mapDispatchToProps = (dispatch) => ({

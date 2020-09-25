@@ -21,7 +21,7 @@ const Login = ({isLoggedIn}) => {
 };
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: !!state?.auth?.data,
+  isLoggedIn: !!state?.auth?.login?.data,
 });
 
 Login.propTypes = {

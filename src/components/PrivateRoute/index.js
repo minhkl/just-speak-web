@@ -11,7 +11,7 @@ const PrivateRouteBase = ({isLoggedIn, component: Component, ...rest}) => {
 };
 
 const mapStateToProps = (state) => ({
-  isLoggedIn: !!state?.auth?.data,
+  isLoggedIn: !!state?.auth?.login?.data,
 });
 
 PrivateRouteBase.propTypes = {
