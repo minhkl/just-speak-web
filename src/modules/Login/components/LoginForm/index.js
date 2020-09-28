@@ -2,16 +2,12 @@ import React, {useCallback} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import cs from 'classnames';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Checkbox from '@material-ui/core/Checkbox';
-import Alert from '@material-ui/lab/Alert';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import {useForm, Controller} from 'react-hook-form';
+import {Input, Button, Checkbox, Typography, Form, Card, Alert} from 'antd';
+import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import {loginAction} from '../../actions';
 import classes from './classes.module.css';
+
+const {Title} = Typography;
 
 const defaultValues = {
   username: '',
@@ -19,58 +15,37 @@ const defaultValues = {
 };
 
 export const LoginFormBase = ({className, requestLogin, isLoggingIn, loginError}) => {
-  const {handleSubmit, errors, control} = useForm({defaultValues});
   const onSubmit = useCallback((data) => {
-    console.log('asdasdsd');
     requestLogin(data);
   }, [requestLogin]);
+
   const errorMessage = loginError ? loginError.message : null;
   return (
-    <Paper elevation={3} className={cs(classes.LoginForm, className)}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Typography variant="h4" component="h1">Just Speak</Typography>
-        {errorMessage && <Alert severity="error" className={classes.LoginForm_ErrorAlert}>{errorMessage}</Alert>}
-        <Controller
-          control={control}
-          name="username"
-          rules={{required: {value: true, message: 'Please enter username'}}}
-          as={<TextField
-            id="username"
-            error={!!errors?.username}
-            helperText={errors?.username?.message}
-            label="Username"
-            variant="outlined"
-            margin="normal"
-            fullWidth/>}
-        />
-        <Controller
-          control={control}
-          name="password"
-          rules={{required: {value: true, message: 'Please enter password'}}}
-          as={<TextField
-            id="password"
-            label="Password"
-            error={!!errors?.password}
-            helperText={errors?.password?.message}
-            variant="outlined"
-            margin="normal"
-            type="password"
-            fullWidth/>}
-        />
-        <FormControlLabel
-          control={<Checkbox color="primary" />}
-          label="Remember Me"
-          labelPlacement="end"
-        />
-        <Button
-          variant="contained"color="primary"
-          size="large"
-          className={classes.LoginForm_SubmitButton}
-          type="submit"
-          disabled={isLoggingIn}
-          fullWidth>{isLoggingIn ? 'Login...' : 'Login'}</Button>
-      </form>
-    </Paper>
+    <Card className={cs(classes.LoginForm, className)}>
+      <Form initialValues={defaultValues} onFinish={onSubmit} layout="vertical">
+        <Title>Just Speak</Title>
+        {errorMessage && <Alert type="error" className={classes.LoginForm_ErrorAlert} message={errorMessage}></Alert>}
+        <Form.Item name="username" rules={[{required: true, message: 'Please enter username'}]}>
+          <Input prefix={<UserOutlined />} placeholder="Username" />
+        </Form.Item>
+        <Form.Item name="password" rules={[{required: true, message: 'Please enter password'}]}>
+          <Input.Password prefix={<LockOutlined />} placeholder="Password" />
+        </Form.Item>
+        <Form.Item>
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className={classes.LoginForm_SubmitButton}
+            loading={isLoggingIn}
+          >{isLoggingIn ? 'Login...' : 'Login'}</Button>
+        </Form.Item>
+      </Form>
+    </Card>
   );
 };
 

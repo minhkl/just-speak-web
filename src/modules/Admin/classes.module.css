@@ -1,0 +1,20 @@
+.admin {
+  min-height: 100vh;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logoWrapper {
+  float: left;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+}
+.content {
+  padding: 24px;
+}

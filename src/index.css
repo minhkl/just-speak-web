@@ -1,3 +1,5 @@
+@import '~antd/dist/antd.css';
+
 html,
 body, #root {
   height: 100%;
@@ -15,4 +17,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.full-screen {
+  min-height: 100vh;
 }

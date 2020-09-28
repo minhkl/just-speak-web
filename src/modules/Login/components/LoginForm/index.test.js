@@ -9,11 +9,11 @@ describe('Test LoginForm', () => {
     const requestLogin = jest.fn();
     render(<LoginFormBase requestLogin={requestLogin}/>);
 
-    const usernameInput = screen.getByLabelText('Username');
+    const usernameInput = screen.getByPlaceholderText('Username');
     expect(usernameInput).toBeInTheDocument();
     fireEvent.change(usernameInput, {target: {value: testUsername}});
 
-    const passwordInput = screen.getByLabelText('Password');
+    const passwordInput = screen.getByPlaceholderText('Password');
     expect(passwordInput).toBeInTheDocument();
     fireEvent.change(passwordInput, {target: {value: testPassword}});
 

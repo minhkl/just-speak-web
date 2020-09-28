@@ -34,8 +34,8 @@ describe('Login actions', () => {
     });
     const expectedActions = [
       validateTokenRequestAction(),
-      validateTokenSuccessAction(mockResponse.data),
       loginSuccessAction(mockResponse.data),
+      validateTokenSuccessAction(mockResponse.data),
     ];
     await store.dispatch(validateTokenAction({token: 'anytoken'}));
     const actualActions = store.getActions();
