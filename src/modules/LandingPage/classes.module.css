@@ -1,0 +1,6 @@
+.landingPage {
+  
+  & .content {
+    padding: 24px 50px;
+  }
+}

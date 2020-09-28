@@ -1,8 +1,9 @@
 .LoginForm {
-  padding: 40px;
+  
+  max-width: 400px
 }
 .LoginForm_SubmitButton {
-  margin-top: 10px;
+  width: 100%;
 }
 .LoginForm_ErrorAlert {
   margin-top: 16px;

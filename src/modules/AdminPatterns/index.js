@@ -1,13 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {Typography} from 'antd';
+
+const {Title} = Typography;
 
 const AdminPatterns = () => (
   <div>
-    <h1>Patterns</h1>
+    <Title>Patterns</Title>
   </div>
 );
-AdminPatterns.propTypes = {
-  children: PropTypes.any,
-};
 
 export default AdminPatterns;

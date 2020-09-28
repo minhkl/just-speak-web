@@ -1,18 +1,24 @@
 import React from 'react';
+import cs from 'classnames';
 import PropTypes from 'prop-types';
-import {Link} from '@reach/router';
+import Header from 'src/components/Header';
+import {Layout} from 'antd';
+import classes from './classes.module.css';
 
-const User = ({children}) => (
-  <div>
-    <nav>
-      <Link to="#">Patterns</Link>
-    </nav>
-    {children}
-  </div>
+const {Content} = Layout;
+
+const User = ({children, contentClassName}) => (
+  <Layout>
+    <Header homePageLink="/user" />
+    <Content className={cs(classes.content, contentClassName)}>
+      {children}
+    </Content>
+  </Layout>
 );
 
 User.propTypes = {
   children: PropTypes.any,
+  contentClassName: PropTypes.string,
 };
 
 export default User;

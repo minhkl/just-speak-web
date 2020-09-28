@@ -1,8 +1,11 @@
 import React from 'react';
+import {Typography} from 'antd';
+
+const {Title} = Typography;
 
 const AdminHome = () => (
   <div>
-    <h1>Welcome to Just Speak</h1>
+    <Title>Welcome to Just Speak</Title>
   </div>
 );
 

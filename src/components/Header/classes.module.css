@@ -1,0 +1,22 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+
+  & .leftMenuWrapper,
+  & .rightMenuWrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+
+  & .logoWrapper {
+    float: left;
+    display: flex;
+    align-items: center;
+  }
+
+  & .logo {
+    height: 50px;
+  }
+}

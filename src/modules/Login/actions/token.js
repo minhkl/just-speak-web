@@ -28,7 +28,7 @@ export const validateTokenAction = ({token}) => async (dispatch) => {
   if (error) {
     dispatch(validateTokenFailAction(error));
   } else {
-    dispatch(validateTokenSuccessAction(response?.data));
     dispatch(loginSuccessAction(response?.data));
+    dispatch(validateTokenSuccessAction(response?.data));
   }
 };

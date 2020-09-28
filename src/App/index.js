@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Router} from '@reach/router';
+import LandingPage from 'src/modules/LandingPage';
 import Login from 'src/modules/Login';
 import AdminHome from 'src/modules/AdminHome';
 import Admin from 'src/modules/Admin';
@@ -24,6 +25,7 @@ const AppBase = ({validateToken, didValidateToken}) => {
   return (
     <div className={classes.App}>
       <Router>
+        <LandingPage path="/" />
         <Login path="/login" />
         <Admin path="/admin">
           <PrivateRoute component={AdminHome} path="/" />
