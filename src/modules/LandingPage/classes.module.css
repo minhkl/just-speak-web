@@ -1,18 +1,6 @@
-.leftMenuWrapper {
-  height: 100%;
-  display: flex;
-  align-self: center;
-}
-.logoWrapper {
-  float: left;
-  display: flex;
-  align-items: center;
-}
-
-.logo {
-  height: 50px;
-}
-.header {
-  display: flex;
-  justify-content: space-between;
+.landingPage {
+  
+  & .content {
+    padding: 24px 50px;
+  }
 }

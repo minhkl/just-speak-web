@@ -1,37 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, Layout, Menu, Typography} from 'antd';
+import cs from 'classnames';
+import {Layout, Menu, Typography} from 'antd';
 import {Link} from '@reach/router';
 import classes from './classes.module.css';
 import withAuth from 'src/modules/Login/hocs/withAuth';
-import logo from 'src/modules/Admin/logo.png';
+import Header from 'src/components/Header';
 
-const {Header, Content} = Layout;
+const {Content} = Layout;
 
-const LandingPageBase = ({isLoggedIn, logout}) => (
-  <Layout className="full-screen">
-    <Header className={classes.header}>
-      <div className={classes.leftMenuWrapper}>
-        <div className={classes.logoWrapper}>
-          <img src={logo} alt="JustSpeak" className={classes.logo}/>
-        </div>
-        {isLoggedIn && (
-          <Menu mode="horizontal" theme="dark">
-            <Menu.Item>
-              <Link to="/admin">Admin</Link>
-            </Menu.Item>
-            <Menu.Item>
-              <Link to="/user">User</Link>
-            </Menu.Item>
-          </Menu>
-        )}
-      </div>
-      <Menu mode="horizontal" theme="dark">
-        {isLoggedIn ? <Button type="Link" onClick={logout}>Logout</Button> : <Link to="/login">Login</Link>}
-      </Menu>
-    </Header>
+const LandingPageBase = ({isLoggedIn}) => (
+  <Layout className={cs('full-screen', classes.landingPage)}>
+    <Header
+      leftMenu={!isLoggedIn ? null : (
+        <Menu mode="horizontal" theme="dark">
+          <Menu.Item>
+            <Link to="/admin">Admin</Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to="/user">User</Link>
+          </Menu.Item>
+        </Menu>
+      )}
+    />
     <Layout>
-      <Content>
+      <Content className={classes.content}>
         <Typography.Title>Wellcome to Just Speak</Typography.Title>
       </Content>
     </Layout>
@@ -39,9 +32,7 @@ const LandingPageBase = ({isLoggedIn, logout}) => (
 );
 
 LandingPageBase.propTypes = {
-  children: PropTypes.any,
   isLoggedIn: PropTypes.bool,
-  logout: PropTypes.func,
 };
 
 const LandingPage = withAuth(LandingPageBase);

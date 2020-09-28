@@ -22,3 +22,6 @@ code {
 .full-screen {
   min-height: 100vh;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
