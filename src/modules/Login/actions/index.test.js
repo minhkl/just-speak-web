@@ -3,6 +3,7 @@ import {validateTokenAction, validateTokenRequestAction, validateTokenSuccessAct
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import configureMockStore from 'redux-mock-store';
+import {apiUrl} from 'src/utils/helpers';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -28,7 +29,7 @@ describe('Login actions', () => {
       },
     };
 
-    moxios.stubRequest('http://localhost:5555/auth/user', {
+    moxios.stubRequest(apiUrl('/auth/user'), {
       status: 200,
       response: mockResponse,
     });
@@ -57,12 +58,12 @@ describe('Login actions', () => {
         user: {username: 'minh'},
       },
     };
-    moxios.stubRequest('http://localhost:5555/auth/login', {
+    moxios.stubRequest(apiUrl('/auth/login'), {
       status: 200,
       response: mockLoginResponse,
     });
 
-    moxios.stubRequest('http://localhost:5555/auth/user', {
+    moxios.stubRequest(apiUrl('/auth/user'), {
       status: 200,
       response: mockAuthUserResponse,
     });
@@ -83,7 +84,7 @@ describe('Login actions', () => {
       error: {message: 'Invalid username or password'},
     };
 
-    moxios.stubRequest('http://localhost:5555/auth/login', {
+    moxios.stubRequest(apiUrl('/auth/login'), {
       status: 400,
       response: mockLoginResponse,
     });

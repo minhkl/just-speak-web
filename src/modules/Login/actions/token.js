@@ -1,5 +1,5 @@
-import request from 'src/utils/request';
 import {loginSuccessAction} from './login';
+import {requestValidateToken} from '../services';
 
 export const validateTokenRequestAction = () => ({
   type: 'VALIDATE_TOKEN_REQUEST',
@@ -21,10 +21,7 @@ export const validateTokenAction = ({token}) => async (dispatch) => {
     dispatch(validateTokenFailAction());
     return;
   }
-  const [error, response] = await request('http://localhost:5555/auth/user', {
-    method: 'POST',
-    headers: {Authorization: `Bearer ${token}`},
-  });
+  const [error, response] = await requestValidateToken({token});
   if (error) {
     dispatch(validateTokenFailAction(error));
   } else {

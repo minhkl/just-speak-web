@@ -1,4 +1,4 @@
-import request from 'src/utils/request';
+import {requestLogin, requestValidateToken} from '../services';
 
 export const loginRequestAction = () => ({
   type: 'LOGIN_REQUEST',
@@ -26,10 +26,7 @@ export const logoutAction = () => (dispatch) => {
 export const loginAction = ({username, password}) => async (dispatch) => {
   dispatch(loginRequestAction());
   // Login - request a token
-  const [loginError, loginResponse] = await request('http://localhost:5555/auth/login', {
-    method: 'POST',
-    data: {username, password},
-  });
+  const [loginError, loginResponse] = await requestLogin({username, password});
   if (loginError) {
     dispatch(loginFailAction(loginError?.error));
     return;
@@ -38,12 +35,7 @@ export const loginAction = ({username, password}) => async (dispatch) => {
   localStorage.setItem('token', token);
 
   // Get user information from the token
-  const [error, response] = await request('http://localhost:5555/auth/user', {
-    method: 'POST',
-    data: {token},
-    headers: {Authorization: `Bearer ${token}`},
-  });
-
+  const [error, response] = await requestValidateToken({token});
   if (error) {
     dispatch(loginFailAction(error?.error));
   }
