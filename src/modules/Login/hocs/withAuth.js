@@ -9,8 +9,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  validateToken: (token) => {
-    dispatch(validateTokenAction({token}));
+  validateToken: () => {
+    dispatch(validateTokenAction());
   },
   logout: () => {
     dispatch(logoutAction());

@@ -9,10 +9,16 @@ export const requestLogin = ({username, password}) => {
   return request(apiUrl('/auth/login'), options);
 };
 
-export const requestValidateToken = ({token}) => {
+export const requestLogout = () => {
   const options = {
     method: 'POST',
-    headers: {Authorization: `Bearer ${token}`},
+  };
+  return request(apiUrl('/auth/logout'), options);
+};
+
+export const requestValidateToken = () => {
+  const options = {
+    method: 'POST',
   };
   return request(apiUrl('/auth/user'), options);
 };

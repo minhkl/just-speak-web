@@ -14,8 +14,7 @@ import withAuth from 'src/modules/Login/hocs/withAuth';
 
 const AppBase = ({validateToken, didValidateToken}) => {
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    validateToken(token);
+    validateToken();
   }, []);
 
   if (!didValidateToken) {

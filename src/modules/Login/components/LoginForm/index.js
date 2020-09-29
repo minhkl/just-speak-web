@@ -10,8 +10,8 @@ import classes from './classes.module.css';
 const {Title} = Typography;
 
 const defaultValues = {
-  username: '',
-  password: '',
+  username: 'minhkl',
+  password: 'minhkl123',
 };
 
 export const LoginFormBase = ({className, requestLogin, isLoggingIn, loginError}) => {

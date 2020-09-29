@@ -15,13 +15,9 @@ export const validateTokenFailAction = (payload) => ({
   payload,
 });
 
-export const validateTokenAction = ({token}) => async (dispatch) => {
+export const validateTokenAction = () => async (dispatch) => {
   dispatch(validateTokenRequestAction());
-  if (!token) {
-    dispatch(validateTokenFailAction());
-    return;
-  }
-  const [error, response] = await requestValidateToken({token});
+  const [error, response] = await requestValidateToken();
   if (error) {
     dispatch(validateTokenFailAction(error));
   } else {
