@@ -1,16 +1,15 @@
 
 import {connect} from 'react-redux';
-import {validateTokenAction, logoutAction} from 'src/modules/Login/actions';
+import {renewTokenAction, logoutAction} from 'src/modules/Login/actions';
 
 const mapStateToProps = (state) => ({
   isLoggedIn: !!state?.auth?.login?.data,
-  isValidatingToken: !!state?.token?.isRequesting,
-  didValidateToken: !!state?.auth?.token?.done,
+  didRenewToken: !!state?.auth?.token?.done,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  validateToken: () => {
-    dispatch(validateTokenAction());
+  renewAccessToken: () => {
+    dispatch(renewTokenAction());
   },
   logout: () => {
     dispatch(logoutAction());

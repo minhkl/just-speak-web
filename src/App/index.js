@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {Router} from '@reach/router';
+import {Spin} from 'antd';
 import LandingPage from 'src/modules/LandingPage';
 import Login from 'src/modules/Login';
 import AdminHome from 'src/modules/AdminHome';
@@ -12,13 +13,13 @@ import PrivateRoute from 'src/components/PrivateRoute';
 import classes from './classes.module.css';
 import withAuth from 'src/modules/Login/hocs/withAuth';
 
-const AppBase = ({validateToken, didValidateToken}) => {
+const AppBase = ({renewAccessToken, didRenewToken}) => {
   useEffect(() => {
-    validateToken();
+    renewAccessToken();
   }, []);
 
-  if (!didValidateToken) {
-    return 'Validating';
+  if (!didRenewToken) {
+    return <Spin size={36} />;
   }
 
   return (
@@ -39,8 +40,8 @@ const AppBase = ({validateToken, didValidateToken}) => {
 };
 
 AppBase.propTypes = {
-  validateToken: PropTypes.func,
-  didValidateToken: PropTypes.bool,
+  renewAccessToken: PropTypes.func,
+  didRenewToken: PropTypes.bool,
 };
 
 const App = withAuth(AppBase);

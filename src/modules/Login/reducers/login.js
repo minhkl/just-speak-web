@@ -3,9 +3,10 @@ export const initialState = {
   error: null,
   isRequesting: false,
 };
+
 const loginReducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case 'LOGOUT_REQUEST': {
+  case 'LOGOUT_SUCCESS': {
     return {...initialState};
   }
   case 'LOGIN_REQUEST': {
@@ -15,6 +16,7 @@ const loginReducer = (state = initialState, action = {}) => {
       error: null,
     };
   }
+  case 'RENEW_ACCESS_TOKEN_SUCCESS':
   case 'LOGIN_SUCCESS': {
     return {
       data: action?.payload,

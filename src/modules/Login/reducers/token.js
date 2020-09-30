@@ -5,21 +5,21 @@ export const initialState = {
 };
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
-  case 'VALIDATE_TOKEN_REQUEST': {
+  case 'RENEW_ACCESS_TOKEN_REQUEST': {
     return {
       isRequesting: true,
       isSuccess: null,
       done: false,
     };
   }
-  case 'VALIDATE_TOKEN_SUCCESS': {
+  case 'RENEW_ACCESS_TOKEN_SUCCESS': {
     return {
       isRequesting: false,
       isSuccess: true,
       done: true,
     };
   }
-  case 'VALIDATE_TOKEN_FAIL': {
+  case 'RENEW_ACCESS_TOKEN_FAIL': {
     return {
       isRequesting: false,
       isSuccess: false,

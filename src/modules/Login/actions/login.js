@@ -1,4 +1,4 @@
-import {requestLogin, requestLogout, requestValidateToken} from '../services';
+import {requestLogin, requestLogout, requestFetchAccount} from '../services';
 
 export const loginRequestAction = () => ({
   type: 'LOGIN_REQUEST',
@@ -41,16 +41,32 @@ export const logoutAction = () => async (dispatch) => {
 export const loginAction = ({username, password}) => async (dispatch) => {
   dispatch(loginRequestAction());
   // Login - request a token
-  const [loginError] = await requestLogin({username, password});
+  const [loginError, loginResponse] = await requestLogin({username, password});
   if (loginError) {
-    dispatch(loginFailAction(loginError?.error));
-    return;
+    return Promise.reject(dispatch(loginFailAction(loginError?.error)));
   }
+  return Promise.resolve(dispatch(loginSuccessAction(loginResponse?.data)));
+};
 
-  // Get user information from the token
-  const [error, response] = await requestValidateToken();
+export const fetchAccountRequestAction = () => ({
+  type: 'FETCH_ACCOUNT_REQUEST',
+});
+
+export const fetchAccountSuccessAction = (payload) => ({
+  type: 'FETCH_ACCOUNT_SUCCESS',
+  payload,
+});
+
+export const fetchAccountFailAction = (payload) => ({
+  type: 'FETCH_ACCOUNT_FAIL',
+  payload,
+});
+
+export const fetchAccountAction = () => async (dispatch) => {
+  dispatch(fetchAccountRequestAction());
+  const [error, response] = await requestFetchAccount();
   if (error) {
-    dispatch(loginFailAction(error?.error));
+    return Promise.reject(dispatch(fetchAccountFailAction(error?.error)));
   }
-  dispatch(loginSuccessAction(response?.data));
+  return Promise.resolve(dispatch(fetchAccountSuccessAction(response?.data)));
 };

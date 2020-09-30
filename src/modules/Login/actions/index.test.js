@@ -1,5 +1,5 @@
 import {loginAction, loginRequestAction, loginSuccessAction, loginFailAction} from './login';
-import {validateTokenAction, validateTokenRequestAction, validateTokenSuccessAction} from './token';
+import {renewTokenAction, renewTokenRequestAction, renewTokenSuccessAction} from './token';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import configureMockStore from 'redux-mock-store';
@@ -34,11 +34,11 @@ describe('Login actions', () => {
       response: mockResponse,
     });
     const expectedActions = [
-      validateTokenRequestAction(),
+      renewTokenRequestAction(),
       loginSuccessAction(mockResponse.data),
-      validateTokenSuccessAction(mockResponse.data),
+      renewTokenSuccessAction(mockResponse.data),
     ];
-    await store.dispatch(validateTokenAction({token: 'anytoken'}));
+    await store.dispatch(renewTokenAction({token: 'anytoken'}));
     const actualActions = store.getActions();
     expect(actualActions).toEqual(expectedActions);
     done();

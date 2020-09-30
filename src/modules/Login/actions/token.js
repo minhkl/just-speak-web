@@ -1,27 +1,25 @@
-import {loginSuccessAction} from './login';
-import {requestValidateToken} from '../services';
+import {requestRenewAccessToken} from '../services';
 
-export const validateTokenRequestAction = () => ({
-  type: 'VALIDATE_TOKEN_REQUEST',
+export const renewTokenRequestAction = () => ({
+  type: 'RENEW_ACCESS_TOKEN_REQUEST',
 });
 
-export const validateTokenSuccessAction = (payload) => ({
-  type: 'VALIDATE_TOKEN_SUCCESS',
+export const renewTokenSuccessAction = (payload) => ({
+  type: 'RENEW_ACCESS_TOKEN_SUCCESS',
   payload,
 });
 
-export const validateTokenFailAction = (payload) => ({
-  type: 'VALIDATE_TOKEN_FAIL',
+export const renewTokenFailAction = (payload) => ({
+  type: 'RENEW_ACCESS_TOKEN_FAIL',
   payload,
 });
 
-export const validateTokenAction = () => async (dispatch) => {
-  dispatch(validateTokenRequestAction());
-  const [error, response] = await requestValidateToken();
+export const renewTokenAction = () => async (dispatch) => {
+  dispatch(renewTokenRequestAction());
+  const [error, response] = await requestRenewAccessToken();
   if (error) {
-    dispatch(validateTokenFailAction(error));
+    dispatch(renewTokenFailAction(error));
   } else {
-    dispatch(loginSuccessAction(response?.data));
-    dispatch(validateTokenSuccessAction(response?.data));
+    dispatch(renewTokenSuccessAction(response?.data));
   }
 };
