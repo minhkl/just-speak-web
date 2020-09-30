@@ -6,7 +6,8 @@ export const initialState = {
 const reducer = (state = initialState, action = {}) => {
   switch (action.type) {
   case 'RENEW_ACCESS_TOKEN_REQUEST': {
-    return {
+    const keepState = action.meta?.keepState;
+    return keepState ? state : {
       isRequesting: true,
       isSuccess: null,
       done: false,

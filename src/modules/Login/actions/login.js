@@ -43,9 +43,11 @@ export const loginAction = ({username, password}) => async (dispatch) => {
   // Login - request a token
   const [loginError, loginResponse] = await requestLogin({username, password});
   if (loginError) {
-    return Promise.reject(dispatch(loginFailAction(loginError?.error)));
+    dispatch(loginFailAction(loginError?.error));
+  } else {
+    dispatch(loginSuccessAction(loginResponse?.data));
   }
-  return Promise.resolve(dispatch(loginSuccessAction(loginResponse?.data)));
+  return [loginError, loginResponse];
 };
 
 export const fetchAccountRequestAction = () => ({

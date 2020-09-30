@@ -8,8 +8,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  renewAccessToken: () => {
-    dispatch(renewTokenAction());
+  renewAccessToken: (keepState) => {
+    dispatch(renewTokenAction(keepState));
   },
   logout: () => {
     dispatch(logoutAction());

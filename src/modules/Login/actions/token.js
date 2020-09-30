@@ -1,7 +1,9 @@
 import {requestRenewAccessToken} from '../services';
 
-export const renewTokenRequestAction = () => ({
+export const renewTokenRequestAction = (payload, meta) => ({
   type: 'RENEW_ACCESS_TOKEN_REQUEST',
+  payload,
+  meta,
 });
 
 export const renewTokenSuccessAction = (payload) => ({
@@ -14,8 +16,8 @@ export const renewTokenFailAction = (payload) => ({
   payload,
 });
 
-export const renewTokenAction = () => async (dispatch) => {
-  dispatch(renewTokenRequestAction());
+export const renewTokenAction = (hideLoading) => async (dispatch) => {
+  dispatch(renewTokenRequestAction(undefined, {keepState: hideLoading}));
   const [error, response] = await requestRenewAccessToken();
   if (error) {
     dispatch(renewTokenFailAction(error));
