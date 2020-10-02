@@ -1,6 +1,9 @@
 import React, {useEffect} from 'react';
+import cs from 'classnames';
 import PropTypes from 'prop-types';
 import {Router} from '@reach/router';
+import {Spin} from 'antd';
+import {LoadingOutlined} from '@ant-design/icons';
 import LandingPage from 'src/modules/LandingPage';
 import Login from 'src/modules/Login';
 import AdminHome from 'src/modules/AdminHome';
@@ -11,15 +14,27 @@ import AdminPatterns from 'src/modules/AdminPatterns';
 import PrivateRoute from 'src/components/PrivateRoute';
 import classes from './classes.module.css';
 import withAuth from 'src/modules/Login/hocs/withAuth';
+import {useInterval} from 'src/utils/hocs';
 
-const AppBase = ({validateToken, didValidateToken}) => {
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    validateToken(token);
-  }, []);
+const REACT_APP_REFRESH_TOKEN_INTERVAL =0.1 * 60 * 1000;
 
-  if (!didValidateToken) {
-    return 'Validating';
+const AppBase = ({renewAccessToken, didRenewToken, isLoggedIn}) => {
+  // Request access token for the first time
+  useEffect(renewAccessToken, []);
+
+  // if user has logged in, request access token after a perior of time
+  useInterval({
+    condition: isLoggedIn,
+    onTick: () => renewAccessToken(true),
+    interval: REACT_APP_REFRESH_TOKEN_INTERVAL,
+  });
+
+  if (!didRenewToken) {
+    return (
+      <div className={cs(classes.App, classes.App_loading)}>
+        <Spin indicator={<LoadingOutlined style={{fontSize: 100}} spin />} />
+      </div>
+    );
   }
 
   return (
@@ -40,8 +55,9 @@ const AppBase = ({validateToken, didValidateToken}) => {
 };
 
 AppBase.propTypes = {
-  validateToken: PropTypes.func,
-  didValidateToken: PropTypes.bool,
+  renewAccessToken: PropTypes.func,
+  didRenewToken: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
 };
 
 const App = withAuth(AppBase);

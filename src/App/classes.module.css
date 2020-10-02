@@ -1,4 +1,10 @@
 .App {
   height: 100%;
   background-color: #aaaabb;
+
+  &.App_loading {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
 }
