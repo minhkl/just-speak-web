@@ -1,4 +1,4 @@
-import {requestLogin, requestValidateToken} from '../services';
+import {requestLogin, requestLogout, requestFetchAccount} from '../services';
 
 export const loginRequestAction = () => ({
   type: 'LOGIN_REQUEST',
@@ -18,9 +18,24 @@ export const logoutRequestAction = () => ({
   type: 'LOGOUT_REQUEST',
 });
 
-export const logoutAction = () => (dispatch) => {
-  localStorage.removeItem('token');
+export const logoutSuccessAction = (payload) => ({
+  type: 'LOGOUT_SUCCESS',
+  payload,
+});
+
+export const logoutFailAction = (payload) => ({
+  type: 'LOGOUT_FAIL',
+  payload,
+});
+
+export const logoutAction = () => async (dispatch) => {
   dispatch(logoutRequestAction());
+
+  const [logoutError] = await requestLogout();
+  if (logoutError) {
+    dispatch(logoutFailAction(logoutError?.error));
+  }
+  dispatch(logoutSuccessAction());
 };
 
 export const loginAction = ({username, password}) => async (dispatch) => {
@@ -29,15 +44,31 @@ export const loginAction = ({username, password}) => async (dispatch) => {
   const [loginError, loginResponse] = await requestLogin({username, password});
   if (loginError) {
     dispatch(loginFailAction(loginError?.error));
-    return;
+  } else {
+    dispatch(loginSuccessAction(loginResponse?.data));
   }
-  const token = loginResponse?.data?.token;
-  localStorage.setItem('token', token);
+  return [loginError, loginResponse];
+};
 
-  // Get user information from the token
-  const [error, response] = await requestValidateToken({token});
+export const fetchAccountRequestAction = () => ({
+  type: 'FETCH_ACCOUNT_REQUEST',
+});
+
+export const fetchAccountSuccessAction = (payload) => ({
+  type: 'FETCH_ACCOUNT_SUCCESS',
+  payload,
+});
+
+export const fetchAccountFailAction = (payload) => ({
+  type: 'FETCH_ACCOUNT_FAIL',
+  payload,
+});
+
+export const fetchAccountAction = () => async (dispatch) => {
+  dispatch(fetchAccountRequestAction());
+  const [error, response] = await requestFetchAccount();
   if (error) {
-    dispatch(loginFailAction(error?.error));
+    return Promise.reject(dispatch(fetchAccountFailAction(error?.error)));
   }
-  dispatch(loginSuccessAction(response?.data));
+  return Promise.resolve(dispatch(fetchAccountSuccessAction(response?.data)));
 };

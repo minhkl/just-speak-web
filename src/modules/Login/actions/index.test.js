@@ -1,5 +1,5 @@
 import {loginAction, loginRequestAction, loginSuccessAction, loginFailAction} from './login';
-import {validateTokenAction, validateTokenRequestAction, validateTokenSuccessAction} from './token';
+import {renewTokenAction, renewTokenRequestAction, renewTokenSuccessAction} from './token';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import configureMockStore from 'redux-mock-store';
@@ -19,31 +19,26 @@ describe('Login actions', () => {
     moxios.uninstall();
   });
 
-  it('dispatches success action when validate token successfully', async (done) => {
+  it('dispatches success action when renew token successfully', async (done) => {
     const mockResponse = {
       status: 'success',
       data: {
-        user: {
-          username: 'minhkl',
-        },
+        token: 'a-token',
       },
     };
-
-    moxios.stubRequest(apiUrl('/auth/user'), {
+    moxios.stubRequest(apiUrl('/auth/refresh_token'), {
       status: 200,
       response: mockResponse,
     });
     const expectedActions = [
-      validateTokenRequestAction(),
-      loginSuccessAction(mockResponse.data),
-      validateTokenSuccessAction(mockResponse.data),
+      renewTokenRequestAction(undefined, {keepState: true}),
+      renewTokenSuccessAction(mockResponse.data),
     ];
-    await store.dispatch(validateTokenAction({token: 'anytoken'}));
+    await store.dispatch(renewTokenAction(true));
     const actualActions = store.getActions();
     expect(actualActions).toEqual(expectedActions);
     done();
   });
-
 
   it('dispatches success action when login succeeds', async (done) => {
     const mockLoginResponse = {
@@ -52,25 +47,14 @@ describe('Login actions', () => {
         token: 'the_token_abcxxx1',
       },
     };
-    const mockAuthUserResponse = {
-      status: 'success',
-      data: {
-        user: {username: 'minh'},
-      },
-    };
     moxios.stubRequest(apiUrl('/auth/login'), {
       status: 200,
       response: mockLoginResponse,
     });
 
-    moxios.stubRequest(apiUrl('/auth/user'), {
-      status: 200,
-      response: mockAuthUserResponse,
-    });
-
     const expectedActions = [
       loginRequestAction(),
-      loginSuccessAction(mockAuthUserResponse.data),
+      loginSuccessAction(mockLoginResponse.data),
     ];
     await store.dispatch(loginAction({username: 'minh', password: 'pass'}));
     const actualActions = store.getActions();

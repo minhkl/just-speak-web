@@ -23,11 +23,11 @@ AvatarPopoverContent.propTypes = {
   onLogout: PropTypes.func,
 };
 
-const UserProfilePopoverBase = withAuth(({logout}) => (
+const UserProfilePopoverBase = ({logout}) => (
   <Popover content={<AvatarPopoverContent onLogout={logout}/>} trigger="click" placement="bottomRight">
     <Avatar className="cursor-pointer" size="large" icon={<UserOutlined />} />
   </Popover>
-));
+);
 
 UserProfilePopoverBase.propTypes = {
   logout: PropTypes.func,
