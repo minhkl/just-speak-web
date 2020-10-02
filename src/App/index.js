@@ -1,7 +1,9 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
+import cs from 'classnames';
 import PropTypes from 'prop-types';
 import {Router} from '@reach/router';
 import {Spin} from 'antd';
+import {LoadingOutlined} from '@ant-design/icons';
 import LandingPage from 'src/modules/LandingPage';
 import Login from 'src/modules/Login';
 import AdminHome from 'src/modules/AdminHome';
@@ -12,30 +14,27 @@ import AdminPatterns from 'src/modules/AdminPatterns';
 import PrivateRoute from 'src/components/PrivateRoute';
 import classes from './classes.module.css';
 import withAuth from 'src/modules/Login/hocs/withAuth';
+import {useInterval} from 'src/utils/hocs';
 
-const REACT_APP_REFRESH_TOKEN_INTERVAL = process.env.REACT_APP_REFRESH_TOKEN_INTERVAL * 60 * 1000;
+const REACT_APP_REFRESH_TOKEN_INTERVAL =0.1 * 60 * 1000;
 
 const AppBase = ({renewAccessToken, didRenewToken, isLoggedIn}) => {
-  const timer = useRef(null);
   // Request access token for the first time
-  useEffect(() => {
-    renewAccessToken();
-  }, []);
+  useEffect(renewAccessToken, []);
 
   // if user has logged in, request access token after a perior of time
-  useEffect(() => {
-    if (isLoggedIn) {
-      timer.current = setInterval(() => renewAccessToken(true), REACT_APP_REFRESH_TOKEN_INTERVAL);
-    } else {
-      if (timer.current !== null) {
-        clearInterval(timer.current);
-        timer.current = null;
-      }
-    }
-  }, [isLoggedIn]);
+  useInterval({
+    condition: isLoggedIn,
+    onTick: () => renewAccessToken(true),
+    interval: REACT_APP_REFRESH_TOKEN_INTERVAL,
+  });
 
   if (!didRenewToken) {
-    return <Spin size={36} />;
+    return (
+      <div className={cs(classes.App, classes.App_loading)}>
+        <Spin indicator={<LoadingOutlined style={{fontSize: 100}} spin />} />
+      </div>
+    );
   }
 
   return (
