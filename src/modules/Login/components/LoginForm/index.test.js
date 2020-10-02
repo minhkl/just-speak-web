@@ -4,8 +4,8 @@ import {render, fireEvent, screen, act} from '@testing-library/react';
 
 describe('Test LoginForm', () => {
   fit('should call requestLogin func when click Login button', async (done) => {
-    const testUsername = 'minhkl';
-    const testPassword = 'minhkl123';
+    const testUsername = 'testuser';
+    const testPassword = 'anypassword';
     const requestLogin = jest.fn();
     render(<LoginFormBase requestLogin={requestLogin}/>);
 
