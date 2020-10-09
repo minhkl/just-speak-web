@@ -1,12 +1,12 @@
-import React, {useCallback} from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
-import {Menu, Avatar, Popover} from 'antd';
+import { Menu, Avatar, Popover } from 'antd';
 import withAuth from 'src/modules/Login/hocs/withAuth';
-import {UserOutlined} from '@ant-design/icons';
+import { UserOutlined } from '@ant-design/icons';
 import classes from './classes.module.css';
 
-const AvatarPopoverContent = ({onLogout}) => {
-  const handleOnItemClick=useCallback(({key}) => {
+const AvatarPopoverContent = ({ onLogout }) => {
+  const handleOnItemClick = useCallback(({ key }) => {
     if (key === 'key-logout') {
       onLogout();
     }
@@ -20,17 +20,17 @@ const AvatarPopoverContent = ({onLogout}) => {
 };
 
 AvatarPopoverContent.propTypes = {
-  onLogout: PropTypes.func,
+  onLogout: PropTypes.func.isRequired,
 };
 
-const UserProfilePopoverBase = ({logout}) => (
-  <Popover content={<AvatarPopoverContent onLogout={logout}/>} trigger="click" placement="bottomRight">
+const UserProfilePopoverBase = ({ logout }) => (
+  <Popover content={<AvatarPopoverContent onLogout={logout} />} trigger="click" placement="bottomRight">
     <Avatar className="cursor-pointer" size="large" icon={<UserOutlined />} />
   </Popover>
 );
 
 UserProfilePopoverBase.propTypes = {
-  logout: PropTypes.func,
+  logout: PropTypes.func.isRequired,
 };
 
 const UserProfilePopover = withAuth(UserProfilePopoverBase);

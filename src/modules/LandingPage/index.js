@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cs from 'classnames';
-import {Layout, Menu, Typography} from 'antd';
-import {Link} from '@reach/router';
-import classes from './classes.module.css';
+import { Layout, Menu, Typography } from 'antd';
+import { Link } from '@reach/router';
 import withAuth from 'src/modules/Login/hocs/withAuth';
 import Header from 'src/components/Header';
+import classes from './classes.module.css';
 
-const {Content} = Layout;
+const { Content } = Layout;
 
-const LandingPageBase = ({isLoggedIn}) => (
+const LandingPageBase = ({ isLoggedIn }) => (
   <Layout className={cs('full-screen', classes.landingPage)}>
     <Header
       leftMenu={!isLoggedIn ? null : (
@@ -32,7 +32,7 @@ const LandingPageBase = ({isLoggedIn}) => (
 );
 
 LandingPageBase.propTypes = {
-  isLoggedIn: PropTypes.bool,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 const LandingPage = withAuth(LandingPageBase);

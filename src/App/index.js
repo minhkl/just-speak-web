@@ -1,9 +1,9 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import cs from 'classnames';
 import PropTypes from 'prop-types';
-import {Router} from '@reach/router';
-import {Spin} from 'antd';
-import {LoadingOutlined} from '@ant-design/icons';
+import { Router } from '@reach/router';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import LandingPage from 'src/modules/LandingPage';
 import Login from 'src/modules/Login';
 import AdminHome from 'src/modules/AdminHome';
@@ -12,13 +12,13 @@ import User from 'src/modules/User';
 import UserHome from 'src/modules/UserHome';
 import AdminPatterns from 'src/modules/AdminPatterns';
 import PrivateRoute from 'src/components/PrivateRoute';
-import classes from './classes.module.css';
 import withAuth from 'src/modules/Login/hocs/withAuth';
-import {useInterval} from 'src/utils/hocs';
+import { useInterval } from 'src/utils/hocs';
+import classes from './classes.module.css';
 
-const REACT_APP_REFRESH_TOKEN_INTERVAL = process.env.REACT_APP_REFRESH_TOKEN_INTERVAL;
+const { REACT_APP_REFRESH_TOKEN_INTERVAL } = process.env;
 
-const AppBase = ({renewAccessToken, didRenewToken, isLoggedIn}) => {
+const AppBase = ({ renewAccessToken, didRenewToken, isLoggedIn }) => {
   // Request access token for the first time
   useEffect(renewAccessToken, []);
 
@@ -26,13 +26,13 @@ const AppBase = ({renewAccessToken, didRenewToken, isLoggedIn}) => {
   useInterval({
     condition: isLoggedIn,
     onTick: () => renewAccessToken(true),
-    interval: REACT_APP_REFRESH_TOKEN_INTERVAL,
+    interval: REACT_APP_REFRESH_TOKEN_INTERVAL * 60 * 1000,
   });
 
   if (!didRenewToken) {
     return (
       <div className={cs(classes.App, classes.App_loading)}>
-        <Spin indicator={<LoadingOutlined style={{fontSize: 100}} spin />} />
+        <Spin indicator={<LoadingOutlined style={{ fontSize: 100 }} spin />} />
       </div>
     );
   }
@@ -55,9 +55,9 @@ const AppBase = ({renewAccessToken, didRenewToken, isLoggedIn}) => {
 };
 
 AppBase.propTypes = {
-  renewAccessToken: PropTypes.func,
-  didRenewToken: PropTypes.bool,
-  isLoggedIn: PropTypes.bool,
+  renewAccessToken: PropTypes.func.isRequired,
+  didRenewToken: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 const App = withAuth(AppBase);

@@ -1,5 +1,4 @@
-import {useRef, useEffect} from 'react';
-
+import { useRef, useEffect } from 'react';
 
 /**
  * Custom hook to wrapper setInterval
@@ -10,7 +9,9 @@ import {useRef, useEffect} from 'react';
  * @param {Function} config.callback - the callback to be called
  */
 const useInterval = (config) => {
-  const {condition, callback, interval, shouldCallImmediately} = config;
+  const {
+    condition, callback, interval, shouldCallImmediately,
+  } = config;
 
   const timer = useRef(null);
 
@@ -20,11 +21,9 @@ const useInterval = (config) => {
         callback();
       }
       timer.current = setInterval(callback, interval);
-    } else {
-      if (timer.current !== null) {
-        clearInterval(timer.current);
-        timer.current = null;
-      }
+    } else if (timer.current !== null) {
+      clearInterval(timer.current);
+      timer.current = null;
     }
     return () => {
       if (timer.current !== null) {
@@ -35,4 +34,5 @@ const useInterval = (config) => {
   }, [condition, shouldCallImmediately, interval, callback]);
 };
 
-export {useInterval};
+export { useInterval };
+export default useInterval;

@@ -1,6 +1,5 @@
-
-import {connect} from 'react-redux';
-import {renewTokenAction, logoutAction} from 'src/modules/Login/actions';
+import { connect } from 'react-redux';
+import { renewTokenAction, logoutAction } from 'src/modules/Login/actions';
 
 const mapStateToProps = (state) => ({
   isLoggedIn: !!state?.auth?.login?.data,

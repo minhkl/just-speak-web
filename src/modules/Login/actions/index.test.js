@@ -1,9 +1,11 @@
-import {loginAction, loginRequestAction, loginSuccessAction, loginFailAction} from './login';
-import {renewTokenAction, renewTokenRequestAction, renewTokenSuccessAction} from './token';
 import thunk from 'redux-thunk';
 import moxios from 'moxios';
 import configureMockStore from 'redux-mock-store';
-import {apiUrl} from 'src/utils/helpers';
+import { apiUrl } from 'src/utils/helpers';
+import { renewTokenAction, renewTokenRequestAction, renewTokenSuccessAction } from './token';
+import {
+  loginAction, loginRequestAction, loginSuccessAction, loginFailAction,
+} from './login';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -31,7 +33,7 @@ describe('Login actions', () => {
       response: mockResponse,
     });
     const expectedActions = [
-      renewTokenRequestAction(undefined, {keepState: true}),
+      renewTokenRequestAction(undefined, { keepState: true }),
       renewTokenSuccessAction(mockResponse.data),
     ];
     await store.dispatch(renewTokenAction(true));
@@ -56,7 +58,7 @@ describe('Login actions', () => {
       loginRequestAction(),
       loginSuccessAction(mockLoginResponse.data),
     ];
-    await store.dispatch(loginAction({username: 'minh', password: 'pass'}));
+    await store.dispatch(loginAction({ username: 'minh', password: 'pass' }));
     const actualActions = store.getActions();
     expect(actualActions).toEqual(expectedActions);
     done();
@@ -65,7 +67,7 @@ describe('Login actions', () => {
   it('dispatches error action when login fails', async (done) => {
     const mockLoginResponse = {
       status: 'error',
-      error: {message: 'Invalid username or password'},
+      error: { message: 'Invalid username or password' },
     };
 
     moxios.stubRequest(apiUrl('/auth/login'), {

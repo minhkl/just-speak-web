@@ -10,11 +10,12 @@ export const download = (url, options) => {
     const objUrl = window.URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement('a');
     link.href = objUrl;
-    link.setAttribute('download', _.get(options, 'fileName'));
+    link.setAttribute('download', options.fileName);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   }).catch((error) => {
+    // eslint-disable-next-line no-console
     console.error('download error: ', error);
     // ...
   });
@@ -24,7 +25,7 @@ export default async function request(url, options) {
   const optionsWithDefaultTimeout = {
     ...options,
     url,
-    'timeout': DEFAULT_TIMEOUT_MS,
+    timeout: DEFAULT_TIMEOUT_MS,
     'Content-Type': 'application/json',
   };
   try {

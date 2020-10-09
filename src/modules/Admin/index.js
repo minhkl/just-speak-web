@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cs from 'classnames';
-import {Layout, Menu} from 'antd';
-import {HomeOutlined, AlignLeftOutlined} from '@ant-design/icons';
-import {Link} from '@reach/router';
+import { Layout, Menu } from 'antd';
+import { HomeOutlined, AlignLeftOutlined } from '@ant-design/icons';
+import { Link } from '@reach/router';
 import withAuth from 'src/modules/Login/hocs/withAuth';
 import Header from 'src/components/Header';
 import classes from './classes.module.css';
 
-const {Content, Sider} = Layout;
+const { Content, Sider } = Layout;
 
-const AdminBase = ({children, contentClassName}) => (
+const AdminBase = ({ children, contentClassName }) => (
   <Layout className={classes.admin}>
     <Header />
     <Layout>
@@ -31,8 +31,16 @@ const AdminBase = ({children, contentClassName}) => (
   </Layout>
 );
 
+AdminBase.defaultProps = {
+  children: null,
+  contentClassName: null,
+};
+
 AdminBase.propTypes = {
-  children: PropTypes.any,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
   contentClassName: PropTypes.string,
 };
 

@@ -1,4 +1,4 @@
-import {requestLogin, requestLogout, requestFetchAccount} from '../services';
+import { requestLogin, requestLogout, requestFetchAccount } from '../services';
 
 export const loginRequestAction = () => ({
   type: 'LOGIN_REQUEST',
@@ -38,10 +38,10 @@ export const logoutAction = () => async (dispatch) => {
   dispatch(logoutSuccessAction());
 };
 
-export const loginAction = ({username, password}) => async (dispatch) => {
+export const loginAction = ({ username, password }) => async (dispatch) => {
   dispatch(loginRequestAction());
   // Login - request a token
-  const [loginError, loginResponse] = await requestLogin({username, password});
+  const [loginError, loginResponse] = await requestLogin({ username, password });
   if (loginError) {
     dispatch(loginFailAction(loginError?.error));
   } else {

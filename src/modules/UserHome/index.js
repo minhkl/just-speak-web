@@ -1,7 +1,7 @@
 import React from 'react';
-import {Typography} from 'antd';
+import { Typography } from 'antd';
 
-const {Title} =Typography;
+const { Title } = Typography;
 
 const UserHome = () => (
   <div className="full-screen">

@@ -1,9 +1,9 @@
 import React from 'react';
-import {Redirect} from '@reach/router';
+import { Redirect } from '@reach/router';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
-const PrivateRouteBase = ({isLoggedIn, component: Component, ...rest}) => {
+const PrivateRouteBase = ({ isLoggedIn, component: Component, ...rest }) => {
   if (!isLoggedIn) {
     return <Redirect noThrow from={rest.path} to="/login" />;
   }
@@ -15,8 +15,8 @@ const mapStateToProps = (state) => ({
 });
 
 PrivateRouteBase.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  component: PropTypes.func,
+  isLoggedIn: PropTypes.bool.isRequired,
+  component: PropTypes.func.isRequired,
 };
 
 const PrivateRoute = connect(mapStateToProps)(PrivateRouteBase);

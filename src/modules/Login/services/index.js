@@ -1,10 +1,10 @@
 import request from 'src/utils/request';
-import {apiUrl} from 'src/utils/helpers';
+import { apiUrl } from 'src/utils/helpers';
 
-export const requestLogin = ({username, password}) => {
+export const requestLogin = ({ username, password }) => {
   const options = {
     method: 'POST',
-    data: {username, password},
+    data: { username, password },
   };
   return request(apiUrl('/auth/login'), options);
 };
@@ -23,7 +23,7 @@ export const requestRenewAccessToken = () => {
   return request(apiUrl('/auth/refresh_token'), options);
 };
 
-export const requestFetchAccount = ({token}) => {
+export const requestFetchAccount = ({ token }) => {
   const options = {
     method: 'POST',
     token,
