@@ -8,6 +8,7 @@ import {
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { loginAction } from '../../actions';
 import classes from './classes.module.css';
+import * as Sentry from '@sentry/react';
 
 const { Title } = Typography;
 
@@ -19,6 +20,13 @@ const defaultValues = {
 export const LoginFormBase = ({
   className, requestLogin, isLoggingIn, loginError,
 }) => {
+  try {
+    const b = 1;
+    b();
+  } catch (e) {
+    Sentry.captureMessage('Aerrrorrrrr', e);
+  }
+
   const onSubmit = useCallback((data) => {
     requestLogin(data);
   }, [requestLogin]);
