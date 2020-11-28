@@ -21,6 +21,8 @@ export const LoginFormBase = ({
   className, requestLogin, isLoggingIn, loginError,
 }) => {
   try {
+    const a = 2;
+    a();
     const e = 1;
     e();
   } catch (e) {

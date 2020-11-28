@@ -7,11 +7,12 @@ import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
+import {version} from '../package.json';
 
 
 Sentry.init({
   dsn: 'https://8e8625db8d2440e797880769b2a8e1fc@o109264.ingest.sentry.io/5533666',
-  release: `just-speak-web@0.1.0`,
+  release: `just-speak-web@${version}`,
   integrations: [
     new Integrations.BrowserTracing(),
   ],
