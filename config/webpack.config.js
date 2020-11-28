@@ -654,16 +654,16 @@ module.exports = function (webpackEnv) {
         // The formatter is invoked directly in WebpackDevServerUtils during development
         formatter: isEnvProduction ? typescriptFormatter : undefined,
       }),
-      new SentryWebpackPlugin({
-        // sentry-cli configuration
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        org: "nfq-qt",
-        project: "just-speak-web",
+      // new SentryWebpackPlugin({
+      //   // sentry-cli configuration
+      //   authToken: process.env.SENTRY_AUTH_TOKEN,
+      //   org: "nfq-qt",
+      //   project: "just-speak-web",
 
-        // webpack specific configuration
-        include: ".",
-        ignore: ["node_modules", "webpack.config.js"],
-      }),
+      //   // webpack specific configuration
+      //   include: ".",
+      //   ignore: ["node_modules", "webpack.config.js"],
+      // }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell webpack to provide empty mocks for them so importing them works.
