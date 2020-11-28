@@ -35,5 +35,6 @@ module.exports = {
     'no-whitespace-before-property': 'error',
     'react/prop-types': 'warn',
     'padded-blocks': 'warn',
+    'object-curly-spacing': 'off',
   },
 };
