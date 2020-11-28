@@ -21,6 +21,8 @@ export const LoginFormBase = ({
   className, requestLogin, isLoggingIn, loginError,
 }) => {
   try {
+    const minh = 'minh';
+    minh();
     const a = 2;
     a();
     const e = 1;
