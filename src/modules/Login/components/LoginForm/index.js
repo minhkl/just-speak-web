@@ -21,15 +21,16 @@ export const LoginFormBase = ({
   className, requestLogin, isLoggingIn, loginError,
 }) => {
   try {
-    const minh = 'minh';
-    minh();
-    const a = 2;
-    a();
+    const b = 2;
+    b();
     const e = 1;
     e();
   } catch (e) {
     Sentry.captureMessage(e);
   }
+
+  const x = 0;
+  x();
 
   const onSubmit = useCallback((data) => {
     requestLogin(data);

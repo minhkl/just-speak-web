@@ -1,6 +1,6 @@
 {
   "name": "just-speak-web",
-  "version": "0.2.4",
+  "version": "0.2.12",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
